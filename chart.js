@@ -1,6 +1,6 @@
 async function drawLineChart() {
   // write your code here
-  const dataset = await d3.json("./../../my_weather_data.json");
+  // const dataset = await d3.json("./../../my_weather_data.json");
   const data = [
     [161276452, 35568417, 5400169],
     [163541563, 36321919, 4858858],
