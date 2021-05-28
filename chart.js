@@ -4,6 +4,7 @@ async function drawLineChart() {
   const data = [
     [161276452, 35568417, 5400169],
     [163541563, 36321919, 4858858],
+    [163541563, 36321919, 4858858],
   ];
   const xTickValues = ["max", "avg", "min"];
 
@@ -20,7 +21,7 @@ async function drawLineChart() {
   //SVG dimention Markup
   const dimensions = {
     height: 400,
-    width: 700,
+    width: 1000,
     margins: {
       top: 50,
       left: 50,
@@ -129,11 +130,7 @@ async function drawLineChart() {
   const rightYAxis = bounds
     .append("g")
     .attr("transform", `translate(${dimensions.boundedWidth},0)`)
-    .call(
-      rightYAxisGenerator
-        .ticks(0)        
-        .tickSize(0)
-    );
+    .call(rightYAxisGenerator.ticks(0).tickSize(0));
 
   //Drawing Grid Lines
   bounds
@@ -232,9 +229,17 @@ async function drawLineChart() {
     .append("line")
     .style("stroke", "black")
     .style("stroke-width", 1)
-    .attr("x1", (d, i) => rootXScale(i) + rootXScale.bandwidth())
+    .attr(
+      "x1",
+      (d, i) =>
+        rootXScale(i) + rootXScale.bandwidth() + rootXScale.bandwidth() / 16
+    )
     .attr("y1", dimensions.margins.top)
-    .attr("x2", (d, i) => rootXScale(i) + rootXScale.bandwidth())
+    .attr(
+      "x2",
+      (d, i) =>
+        rootXScale(i) + rootXScale.bandwidth() + rootXScale.bandwidth() / 16
+    )
     .attr("y2", dimensions.boundedHeight);
 }
 
