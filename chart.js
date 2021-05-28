@@ -85,9 +85,12 @@ async function drawLineChart() {
   const formatYAxisValue = d3.format(".2s");
   //Generates Axis in bottom with any given scale
   const xAxisGenerator = (scale) => d3.axisBottom().scale(scale);
-  
+
   //Generates Axis in left with any given scale
   const yAxisGenerator = d3.axisLeft().scale(yScale);
+
+  //Generates Axis in right with any given scale
+  const rightYAxisGenerator = d3.axisRight().scale(yScale);
 
   //Axis for plotting bar group
   const rootXAxis = bounds
@@ -95,7 +98,7 @@ async function drawLineChart() {
     .data(d3.range(data.length))
     .enter()
     .append("g")
-    .call(xAxisGenerator(xScale).tickSizeOuter(0))
+    .call(xAxisGenerator(xScale).tickSizeOuter(0).tickSize(0).tickPadding(10))
     .attr(
       "transform",
       (d, i) => `translate(${rootXScale(i)}, ${dimensions.boundedHeight} )`
@@ -120,7 +123,17 @@ async function drawLineChart() {
         return d === 0 ? "0" : formatYAxisValue(d);
       })
       .tickSizeOuter(0)
+      .tickSize(0)
+      .tickPadding(7)
   );
+  const rightYAxis = bounds
+    .append("g")
+    .attr("transform", `translate(${dimensions.boundedWidth},0)`)
+    .call(
+      rightYAxisGenerator
+        .ticks(0)        
+        .tickSize(0)
+    );
 
   //Drawing Grid Lines
   bounds
@@ -145,7 +158,7 @@ async function drawLineChart() {
       return `translate(${rootXScale(i)},0)`;
     })
     .selectAll("rect")
-    .data((d) => {    
+    .data((d) => {
       return d;
     })
     .enter()
